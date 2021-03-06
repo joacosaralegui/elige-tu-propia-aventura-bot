@@ -1,0 +1,5 @@
+tweepy
+requests
+selenium
+pylint
+mobi-python

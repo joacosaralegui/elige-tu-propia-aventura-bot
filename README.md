@@ -22,5 +22,5 @@ Para instalar Selenium (en Ubuntu):
 
 ## Uso
 
-1. Programar ejecución de tarea periódica de `main.py` para automatizar la actualización del bot.
+1. Programar ejecución de tarea periódica desde la carpeta src `python main.py` para automatizar la actualización del bot.
 2. Twittear desde la cuenta generada un tweet que incluya el hashtag del libro que queremos empezar a publicar y a partir de ahi el bot continua por su cuenta. 

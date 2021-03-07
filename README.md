@@ -15,6 +15,9 @@ Es necesario contar con una [cuenta de desarrollador](https://developer.twitter.
 Para instalar Selenium (en Ubuntu):
 ```sudo apt-get install chromium-chromedriver```
 
+## Cargar libros
+Transformar los PDF en secuencia de imágenes, que incluyan el número de página en el nombre respetando el formato ddd (tres digitos, ej: 008,012,145) y construir, en una carpeta aparte dentro del directorio *books* el archivo `guide.json` siguiendo el ejemplo que se encuentra actualmente en el repositorio. Para mayor facilidad a la hora de construir la guía recomiendo eliminar todas las páginas que sobren al principio para que el número de página se corresponda con el número en el nombre de archivo. (001 sería parte del nombre de la imagen de la página 1 de la aventura).
+
 ## Uso
 
 Programar ejecución de tarea periódica de `main.py` para automatizar la actualización del bot.

@@ -87,7 +87,7 @@ class Bot:
         """
         print("Login in to Twitter API...")
         self.twitter_handler = TwitterHandler()
-        self.hours = 12
+        self.hours = 6
 
     def post(self):
         """
@@ -137,6 +137,7 @@ class Bot:
         # Upload pages corresponding to chapter
         chunked_pages = chunks(pages,4)
         for chunk in chunked_pages:
+            print("Publishing images..")
             images = [book.get_image(page_id) for page_id in chunk] 
             media_ids = [self.twitter_handler.api.media_upload(i).media_id_string  for i in images] 
             new_tweet = self.twitter_handler.api.update_status(media_ids=media_ids,in_reply_to_status_id=tweet_id)
@@ -145,14 +146,17 @@ class Bot:
         # Post choices poll
         utterances = ["cómo seguimos?", "y ahora?", "mmm...", "y ahora qué?", ""]
         if choices:
+            print("Publishing poll...")
             text = "#"+book.hash+" Cómo seguimos?"
             if len(choices) == 2:
                 self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1], hours=self.hours)
             elif len(choices) == 3:
-                self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1], choices[2], hourse=self.hours)
+                self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1], choices[2], hours=self.hours)
             else:
                 print("ERROR: choices not properly loaded for: " + book.hash)
 
+        print("All done!")
+        
 def chunks(lst, n):
     """Yield successive n-sized chunks from lst."""
     for i in range(0, len(lst), n):

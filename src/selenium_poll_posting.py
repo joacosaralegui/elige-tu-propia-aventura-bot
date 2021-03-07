@@ -48,6 +48,7 @@ class TwitterLocator:
     option_three     = (By.NAME, 'Choice3')
     days             = (By.ID, 'Days')
     hours            = (By.ID, 'Hours')
+    minutes          = (By.ID, 'Minutes')
 
     # etc.
     search_input     = (By.ID, "search-query")
@@ -109,7 +110,7 @@ class PollBot(object):
         self.login_confirm.click()
         time.sleep(0.5)
 
-    def tweet_poll(self, post_text, status_id, choice1, choice2, choice3, days, hours):
+    def tweet_poll(self, post_text, status_id, choice1, choice2, choice3, days, hours,minutes=15):
         self.browser.get(URL.TWITTER_STATUS+str(status_id))
         self.timeout = 2
         # click the tweet box
@@ -139,14 +140,21 @@ class PollBot(object):
             time.sleep(0.1)
             self.option_three.send_keys(choice3)
 
-        self.days.click()
-        time.sleep(0.1)
-        Select(self.days).select_by_value(str(days))
-        time.sleep(0.1)
-        self.hours.click()
-        time.sleep(0.1)
-        Select(self.hours).select_by_value(str(hours))
-        time.sleep(0.1)
+        if days == 0 and hours == 0:
+            self.minutes.click()
+            time.sleep(0.1)
+            Select(self.minutes).select_by_value(str(minutes))
+            time.sleep(0.1)
+        else:
+            self.days.click()
+            time.sleep(0.1)
+            Select(self.days).select_by_value(str(days))
+            time.sleep(0.1)
+            self.hours.click()
+            time.sleep(0.1)
+            Select(self.hours).select_by_value(str(hours))
+            time.sleep(0.1)
+            
         # send the tweet
         self.tweet_btn.click()
         time.sleep(2)

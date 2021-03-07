@@ -34,6 +34,9 @@ class TwitterHandler:
     def get_latest_tweet(self):
         return self.api.user_timeline(id = self.twitter_id, count = 1, tweet_mode="extended")[0]
          
+    def has_poll(self,response_json):
+        return response_json and 'includes' in response_json and 'polls' in response_json['includes']
+
     def get_poll(self, tweet_id):
         """
         Fetch poll object from a specific tweet (requires manual connection to twitter api)
@@ -41,8 +44,9 @@ class TwitterHandler:
         poll_data_url = f'https://api.twitter.com/2/tweets?ids={tweet_id}&expansions=attachments.poll_ids&poll.fields=duration_minutes,end_datetime,options,voting_status'
         response = requests.get(poll_data_url, auth=self.raw_auth)
         response_json = response.json()
-        if response_json and 'includes' in response_json['data'][0]:
-            return response_json['data'][0]['includes']['polls'][0]
+        if self.has_poll(response_json):
+            return response_json['includes']['polls'][0]
+        import pdb; pdb.set_trace()
         
 
     def get_latest_poll(self):
@@ -60,7 +64,7 @@ class TwitterHandler:
         winner = None
         votes = -1
         for option in poll['options']:
-            if option['votes'] > winner:
+            if option['votes'] > votes:
                 winner = option
                 votes = option['votes']
         return winner['label']
@@ -77,6 +81,7 @@ class Bot:
         """
         Initializes twitter handler
         """
+        print("Login in to Twitter API...")
         self.twitter_handler = TwitterHandler()
 
     def post(self):
@@ -85,6 +90,7 @@ class Bot:
         If it has a poll then, its a note to continue the book
         It it has no poll then its the first chapter to publish
         """
+        print("Fetching latest tweet...")
         latest_tweet = self.twitter_handler.get_latest_tweet()
         hashtags = latest_tweet.entities.get('hashtags')
         
@@ -96,6 +102,7 @@ class Bot:
             if book_hash not in books.BOOK_PATHS:
                 print("ERROR: Hashtag is not in books index!")
             else:
+                print("Preparing to publish response...")
                 book = books.Book(books.BOOK_PATHS[book_hash])
 
                 poll = self.twitter_handler.get_poll(latest_tweet.id)

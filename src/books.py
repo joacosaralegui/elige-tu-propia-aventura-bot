@@ -25,7 +25,8 @@ class Book(object):
         return None
 
 BOOK_PATHS = {
-    'PeligroEnOriente':'books/Peligro en oriente/'
+    'PeligroEnOriente':'books/Peligro en oriente/',
+    'LaSupercomputadora':'books/El superordenador/'
 }
 
 

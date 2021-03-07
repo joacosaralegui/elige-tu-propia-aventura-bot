@@ -1,6 +1,7 @@
 import requests
 import tweepy
 import sys
+import random
 from requests_oauthlib import OAuth1
 
 import books
@@ -70,12 +71,12 @@ class TwitterHandler:
                 votes = option['votes']
         return winner['label']
     
-    def post_poll(self, text, tweet_id, choice1, choice2, choice3=None,days=0,hours=1):
+    def post_poll(self, text, tweet_id, choice1, choice2, choice3=None,days=0,hours=0,minutes=15):
         """
         Use selenium to post poll 
         """
         pollBot = selenium_poll_posting.PollBot()
-        pollBot.run(text, tweet_id, choice1, choice2, choice3,days,hours)
+        pollBot.run(text, tweet_id, choice1, choice2, choice3, days, hours, minutes)
 
 
 
@@ -87,7 +88,8 @@ class Bot:
         """
         print("Login in to Twitter API...")
         self.twitter_handler = TwitterHandler()
-        self.hours = 6
+        self.hours = 0
+        self.minutes = 25
 
     def post(self):
         """
@@ -147,11 +149,11 @@ class Bot:
         utterances = ["cómo seguimos?", "y ahora?", "mmm...", "y ahora qué?", ""]
         if choices:
             print("Publishing poll...")
-            text = "#"+book.hash+" Cómo seguimos?"
+            text = "#"+book.hash+" "+ random.choice(utterances)
             if len(choices) == 2:
-                self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1], hours=self.hours)
+                self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1], hours=self.hours, minutes=self.minutes)
             elif len(choices) == 3:
-                self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1], choices[2], hours=self.hours)
+                self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1], choices[2], hours=self.hours, minutes=self.minutes)
             else:
                 print("ERROR: choices not properly loaded for: " + book.hash)
 

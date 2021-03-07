@@ -44,10 +44,11 @@ class TwitterHandler:
         poll_data_url = f'https://api.twitter.com/2/tweets?ids={tweet_id}&expansions=attachments.poll_ids&poll.fields=duration_minutes,end_datetime,options,voting_status'
         response = requests.get(poll_data_url, auth=self.raw_auth)
         response_json = response.json()
+        
         if self.has_poll(response_json):
             return response_json['includes']['polls'][0]
-        import pdb; pdb.set_trace()
         
+        return None
 
     def get_latest_poll(self):
         """
@@ -76,13 +77,17 @@ class TwitterHandler:
         pollBot = selenium_poll_posting.PollBot()
         pollBot.run(text, tweet_id, choice1, choice2, choice3,days,hours)
 
+
+
 class Bot:
+
     def __init__(self):
         """
         Initializes twitter handler
         """
         print("Login in to Twitter API...")
         self.twitter_handler = TwitterHandler()
+        self.hours = 12
 
     def post(self):
         """
@@ -137,13 +142,14 @@ class Bot:
             new_tweet = self.twitter_handler.api.update_status(media_ids=media_ids,in_reply_to_status_id=tweet_id)
             tweet_id = new_tweet.id
 
-        # TODO: if choices, post a poll including book.hash as hashtag, following last tweet id
+        # Post choices poll
+        utterances = ["cómo seguimos?", "y ahora?", "mmm...", "y ahora qué?", ""]
         if choices:
             text = "#"+book.hash+" Cómo seguimos?"
             if len(choices) == 2:
-                self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1])
+                self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1], hours=self.hours)
             elif len(choices) == 3:
-                self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1], choices[2])
+                self.twitter_handler.post_poll(text, tweet_id, choices[0], choices[1], choices[2], hourse=self.hours)
             else:
                 print("ERROR: choices not properly loaded for: " + book.hash)
 
@@ -155,4 +161,3 @@ def chunks(lst, n):
 if __name__=="__main__":
     bot = Bot() 
     bot.post()      
-    import pdb; pdb.set_trace()

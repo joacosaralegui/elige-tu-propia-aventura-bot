@@ -131,3 +131,4 @@ dmypy.json
 # Custom
 src/credentials.py
 src/books/
+src/log.txt

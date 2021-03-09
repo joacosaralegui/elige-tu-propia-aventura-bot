@@ -88,8 +88,8 @@ class Bot:
         """
         print("Login in to Twitter API...")
         self.twitter_handler = TwitterHandler()
-        self.hours = 0
-        self.minutes = 25
+        self.hours = 1
+        self.minutes = 0
 
     def post(self):
         """

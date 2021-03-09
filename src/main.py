@@ -174,6 +174,6 @@ if __name__=="__main__":
     now = datetime.datetime.now(local_timezone)
 
     publish_hours = (10,21)
-    if now.hour > publish_hours[0] and now.tm_hour < publish_hours[1]:
+    if now.hour > publish_hours[0] and now.hour < publish_hours[1]:
         bot = Bot() 
         bot.post()      

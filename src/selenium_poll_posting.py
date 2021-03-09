@@ -39,6 +39,10 @@ class TwitterLocator:
     tweet_btn        = (By.XPATH, "//span[text()='Tweet']")
     another_tweet    = (By.XPATH, "//div[@aria-label='Reply']")
 
+    # challenge
+    challenge_response = (By.ID, 'challenge_response')
+    challenge_submit = (By.ID, 'email_challenge_submit')
+
     # poll stuff
     poll_btn         = (By.XPATH, '//div[@aria-label="Add poll"]')
     option_one       = (By.NAME, 'Choice1')
@@ -110,12 +114,19 @@ class PollBot(object):
         self.password.send_keys(password)
         time.sleep(0.1)
         self.login_confirm.click()
-        time.sleep(0.5)
+        time.sleep(1.5)
+
+        try:
+            self.challenge_response.send_keys(os.environ.get("phone_number"))
+            time.sleep(1)
+            self.challenge_submit.click()
+            time.sleep(1)
+        except Exception:
+            print("No challenge")
 
     def tweet_poll(self, post_text, status_id, choice1, choice2, choice3, days, hours, minutes=15):
         self.browser.get(URL.TWITTER_STATUS+str(status_id))
-        print(URL.TWITTER_STATUS + str(status_id))
-        self.timeout = 3
+        self.timeout = 2
         # click the tweet box
         self.another_tweet.click()
         time.sleep(1)

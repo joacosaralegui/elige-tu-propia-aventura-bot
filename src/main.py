@@ -171,7 +171,7 @@ def chunks(lst, n):
         
 if __name__=="__main__":
     local_timezone = timezone('America/Argentina/Buenos_Aires')
-    now = datetime.datetime.now(local_timezone)
+    now = datetime.now(local_timezone)
 
     publish_hours = (10,21)
     if now.hour > publish_hours[0] and now.hour < publish_hours[1]:

@@ -114,7 +114,8 @@ class PollBot(object):
 
     def tweet_poll(self, post_text, status_id, choice1, choice2, choice3, days, hours, minutes=15):
         self.browser.get(URL.TWITTER_STATUS+str(status_id))
-        self.timeout = 2
+        print(URL.TWITTER_STATUS + str(status_id))
+        self.timeout = 3
         # click the tweet box
         self.another_tweet.click()
         time.sleep(1)

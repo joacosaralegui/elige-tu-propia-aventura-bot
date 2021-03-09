@@ -3,10 +3,14 @@ import tweepy
 import sys
 import os
 import random
+from datetime import datetime, timedelta
+from pytz import timezone
+import pytz
 from requests_oauthlib import OAuth1
 
 import books
 import selenium_poll_posting
+
 
 class TwitterHandler:
     """
@@ -166,5 +170,10 @@ def chunks(lst, n):
         yield lst[i:i + n]
         
 if __name__=="__main__":
-    bot = Bot() 
-    bot.post()      
+    local_timezone = timezone('America/Argentina/Buenos_Aires')
+    now = datetime.datetime.now(local_timezone)
+
+    publish_hours = (10,21)
+    if now.hour > publish_hours[0] and now.tm_hour < publish_hours[1]:
+        bot = Bot() 
+        bot.post()      

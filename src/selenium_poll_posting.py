@@ -37,7 +37,7 @@ class TwitterLocator:
     outer_tweet_box  = (By.CLASS_NAME, 'public-DraftStyleDefault-block')
     tweet_box        = (By.CLASS_NAME, "public-DraftEditor-content")
     tweet_btn        = (By.XPATH, "//span[text()='Tweet']")
-    another_tweet    = (By.XPATH, "//span[text()='Add another Tweet']")
+    another_tweet    = (By.XPATH, '//div[@aria-label="Reply"')
 
     # poll stuff
     poll_btn         = (By.XPATH, '//div[@aria-label="Add poll"]')

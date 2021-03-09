@@ -28,10 +28,10 @@ class Constants:
 
 class TwitterLocator:
     # login stuff    
-    login_btn        = (By.XPATH, "//span[text()='Iniciar sesión']")
+    login_btn        = (By.XPATH, "//span[text()='Log in']")
     username         = (By.NAME, "session[username_or_email]")
     password         = (By.NAME, "session[password]")
-    login_confirm    = (By.XPATH, "//span[text()='Iniciar sesión']")
+    login_confirm    = (By.XPATH, "//span[text()='Log in']")
 
     # tweet stuff
     outer_tweet_box  = (By.CLASS_NAME, 'public-DraftStyleDefault-block')

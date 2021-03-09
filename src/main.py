@@ -5,7 +5,6 @@ import random
 from requests_oauthlib import OAuth1
 
 import books
-import credentials
 import selenium_poll_posting
 
 class TwitterHandler:
@@ -21,13 +20,14 @@ class TwitterHandler:
             Inits tweepy api, used to fetch all other Twitter info in a more friendly way
         """
         self.raw_auth = OAuth1(
-            credentials.consumer_key, 
-            credentials.consumer_secret, 
-            credentials.access_token, 
-            credentials.access_token_secret) 
+            os.environ.get("consumer_key"), 
+            os.environ.get("consumer_secret"), 
+            os.environ.get("access_token"), 
+            os.environ.get("access_token_secret") 
+        )
 
-        auth = tweepy.OAuthHandler(credentials.consumer_key, credentials.consumer_secret)
-        auth.set_access_token(credentials.access_token, credentials.access_token_secret)
+        auth = tweepy.OAuthHandler(os.environ.get("consumer_key"), os.environ.get("consumer_secret"))
+        auth.set_access_token(os.environ.get("access_token"), os.environ.get("access_token_secret"))
         
         self.api = tweepy.API(auth)
         self.twitter_id = self.api.me().id

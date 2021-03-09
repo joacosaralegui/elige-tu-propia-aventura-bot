@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 # Custom
+src/credentials.py
 src/log.txt

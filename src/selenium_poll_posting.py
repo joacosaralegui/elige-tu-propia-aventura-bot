@@ -15,15 +15,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.ui import Select
 
-import credentials
-
 class URL:
     TWITTER = 'http://twitter.com'
     TWITTER_STATUS = 'https://twitter.com/botamoud/status/'
 
 class Constants:
-    USERNAME = credentials.user
-    PASSWORD = credentials.password
+    USERNAME = os.environ.get("user")
+    PASSWORD = os.environ.get("password")
     GLOBAL_ENTRY_Q = '#globalentry'
 
 
